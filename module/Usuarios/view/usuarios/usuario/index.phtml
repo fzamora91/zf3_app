@@ -1,0 +1,23 @@
+
+
+<h1><?= $this->titulo ?></h1>
+<table class="table table-striped">
+	<thead class="thead-dark">
+		<tr>
+		  <th>Id</th>
+		  <th>Nombre</th>
+		  <th>Apellido</th>
+		  <th>Correo</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->usuarios as $usuario): ?>
+		   <tr>
+		   	 <td><?= $usuario->getId()?></td>
+		   	 <td><?= $usuario->getNombre()?></td>
+		   	 <td><?= $usuario->getApellido()?></td>
+		   	 <td><?= $usuario->getEmail()?></td>
+		   </tr>
+		 <?php endforeach?>
+	</tbody>
+</table>
