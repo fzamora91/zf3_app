@@ -1,3 +1,6 @@
+Bienvenido, 
+<strong><?= $this->layout()->auth->getIdentity()->nombre;?></strong>
+<a style="text-align:right;" class="nav-link" href="<?= $this->url('login',['action'=>'logout']) ?>" id="dropdown01">Cerrar sesion</a>
 
 
 <h1><?= $this->titulo ?></h1>
