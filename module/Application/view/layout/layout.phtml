@@ -39,7 +39,11 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?= $this->url('home') ?>">Home</a></li>
+                        <li class="nav-item dropdown  my-2 my-lg-0">
+                           <a class="nav-link dropdown-toggle" href="<?= $this->url('login',['action'=>'logout']) ?>" id="dropdown01">Cerrar sesion</a>
+                        </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
