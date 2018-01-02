@@ -18,11 +18,10 @@
 return [
     // ...
     'db'=>[
-         'driver'=>"Pgsql",
+         'driver'=>"pdo_pgsql",
          /*'database'=>"db_zend",
          /*'hostname'=>"localhost",*/
-         'dsn'=>'pgsql:database=db_zend;hostname=localhost;port=5433',
-
+         'dsn'=>'pgsql:dbname=db_zend;host=localhost;port=5432',
          /*'driver_options'=>[
               PDO::PGSQL_ATTR_INIT_COMMAND => 'SET NAME \'UTF8\''
          ],*/      

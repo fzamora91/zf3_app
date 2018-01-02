@@ -9,13 +9,13 @@ class Login
 {
    private $auth;
    private $authAdapter;
-
+   
    const NOT_IDENTITY="notIdentity";
    const INVALID_CREDENTIAL="invalidCredential";
    const INVALID_USER="invalidUser";
    const INVALID_LOGIN="invalidLogin";
    
-   protected $messages=[
+   private $messages=[
    	  self::NOT_IDENTITY=>"no identity",
       self::INVALID_CREDENTIAL=>"invalid credential",
       self::INVALID_USER=>"invalid user",
@@ -35,28 +35,49 @@ class Login
           $this->authAdapter->setIdentity($identifier);
           $this->authAdapter->setCredential($password);
           $result = $this->auth->authenticate($this->authAdapter);
-          switch ($result->getCode()) {
+          switch ($result->getCode()) 
+          {
           	case Result::SUCCESS:
-          		if($result->isInvalid()){
-          			$data = $this->authAdapter->getResultObject();
+          		if($result->isValid())
+              {
+          			$data = $this->authAdapter->getResultRowObject();
           			$this->auth->getStorage()->write($data);
           		}
           		else
           		{
-
+                throw new RuntimeException($this->messages[self::INVALID_USER]);
           		}
-          		break;
-          	
+          	break;
+            case Result::FAILURE_IDENTITY_NOT_FOUND:
+          	   throw new RuntimeException($this->messages[self::NOT_IDENTITY]);
+            break;
+            case Result::FAILURE_CREDENTIAL_INVALID:
+               throw new RuntimeException($this->messages[self::INVALID_CREDENTIAL]);
+            break;
           	default:
-          		# code...
-          		break;
+          		throw new RuntimeException($this->messages[self::INVALID_LOGIN]);
+          	break;
           }
       }
+      else
+      {
+        throw new RuntimeException($this->messages[self::INVALID_LOGIN]);
+      }
+      return $this;
    }
 
    public function setMessage($messageString, $messageKey=null)
    {
-   	  
+      if($messageKey==null)
+      {
+          $keys=arrays_keys($this->messages);
+          $messageKey=current($keys);
+      }
+      if(!isset($this->messages[$messageKey]))
+      {
+         throw new \RuntimeException('No messages exist for key');
+      }
+
    	  $this->messages[$messageKey]=$messageString;
       return $this;
    }

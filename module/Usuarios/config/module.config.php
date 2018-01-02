@@ -9,7 +9,6 @@ use Zend\Authentication\AuthenticationService;
 return [
     'controllers' => [
         'factories' => [
-            AuthenticationService::class => InvokableFactory::class,
             Controller\UsuarioController::class => Controller\ControllerFactory::class,
             Controller\LoginController::class => Controller\ControllerFactory::class,
         ],

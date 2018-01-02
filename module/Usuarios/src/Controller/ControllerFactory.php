@@ -17,8 +17,7 @@ class ControllerFactory implements FactoryInterface
        		$usuarioDao = $container->get(IUsuarioDao::class);
        		$controller = new UsuarioController($usuarioDao);
        		break;
-        default:
-          case LoginController::class:
+        case LoginController::class:
                $login = $container->get(lg::class);
                $controller = new LoginController($login);
                break;

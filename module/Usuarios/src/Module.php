@@ -9,12 +9,10 @@ namespace Usuarios;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Authentication\AuthenticationService;
-use Zend\serviceManager\Factory\InvocableFactory;
-
+use Zend\serviceManager\Factory\InvokableFactory;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-
 
 use Usuarios\Model\Entity\Usuario;
 use Usuarios\Model\Dao\IUsuarioDao;
@@ -44,14 +42,27 @@ class Module
       $matches = $e->getRouteMatch();
       $controllerName = $matches->getParam('controller');
       $action = $matches->getParam('action');
+
       switch ($controllerName) {
         case Controller\LoginController::class:
           # code...
-          if(in_array($action, ['','']))
+          if(in_array($action, ['index','autenticar']))
           {
-               return;
+            $matches->setParam('controller',Controller\LoginController::class);
+            $matches->setParam('action','index');
+            //return;
           }
-          break;        
+        break;
+        case Controller\UsuarioController::class:
+          # code...
+          if(in_array($action, ['index']))
+          {
+            $matches->setParam('controller',Controller\LoginController::class);
+            $matches->setParam('action','index');
+            //return;
+          }
+        break;   
+        
       }
       if(!$auth->isLoggedIn())
       {
@@ -69,26 +80,24 @@ class Module
     {
     	return[
              'factories'=> [
+                 AuthenticationService::class => InvokableFactory::class,
+                 lg::class => function($sm){
+                           $dbAdapter = $sm->get(AdapterInterface::class);
+                           $authService = $sm->get(AuthenticationService::class);
+                           //$authService = new AuthenticationService();
+                           return new Lg($dbAdapter, $authService);
+                  },
              	   'UsuariosTableGateway' => function($sm){
                               $dbAdapter=$sm->get(AdapterInterface::class);
                               $resultSetPrototype = new ResultSet();
                               $resultSetPrototype->setArrayObjectPrototype(new Usuario());
                               return new TableGateway('usuarios',$dbAdapter,null,$resultSetPrototype);
-                            },
-                            IUsuarioDao::class => function($sm)
-                            {
+                  },
+                  IUsuarioDao::class => function($sm){
                             	$TableGateway=$sm->get('UsuariosTableGateway');
                             	$dao = new UsuarioDao($TableGateway);
                             	return $dao;
-                            },
-                  AuthenticationService::class => InvocableFactory::class,
-                  lg::class => function($sm)
-                     {
-                           $dbAdapter = $sm->get(AdapterInterface::class);
-                           //$authService = $sm->get(AuthenticationService::class);
-                           $auth = new AuthenticationService();
-                           return new Lg($dbAdapter, $auth);
-                     }
+                  },
              ],
              'aliases'=>[
                            'auth_service'=>AuthenticationService::class,

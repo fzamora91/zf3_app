@@ -19,8 +19,8 @@ class LoginValidator extends InputFilter
                     	[
                        'name'=>'StringLength',
                        'options'=>[
-                           'min'=>4,
-                           'min'=>8,
+                           'min'=>3,
+                           'max'=>8,
                        ],
                        ],[
                        'name'=>'Alnum'

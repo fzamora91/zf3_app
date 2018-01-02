@@ -4,9 +4,9 @@ $this->form->prepare();
 $this->form->setAttribute('action',$this->url('login',['action'=>'autenticar']));
 $this->form->setAttribute('class','form-horizontal');
 $this->form->setAttribute('role','form');
+// <!--<?= $this->formElmentErrors($this->form->get('email'))
+//<?= $this->formElmentErrors($this->form->get('password'))
 ?>
-
-
 
 <?php if(!$this->identity): ?>
 
@@ -28,7 +28,8 @@ $this->form->setAttribute('role','form');
            	  	<?= $this->formInput($this->form->get('email'))?>
            	  </div>
               <div style="color:red">
-               <?= $this->formElmentErrors($this->form->get('email'))?>
+              <!---->
+              <?= $this->formElementErrors($this->form->get('email')) ?>
               </div>
            </div>
 
@@ -38,11 +39,26 @@ $this->form->setAttribute('role','form');
               <?= $this->formInput($this->form->get('password'))?>
             </div>
             <div style="color:red">
-              <?= $this->formElmentErrors($this->form->get('password'))?>
+              <!---->
+              <?= $this->formElementErrors($this->form->get('password')) ?>
             </div>
            </div>
-
-                     
+           
+           <div class="form-group">
+            <!--js-->
+            <!--<script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="6Lc59z4UAAAAAB6rd9JC9TF575EGF2_JGB5pnZfW">
+            </div>-->
+            <div class="col-sm-5">
+              <p class="refresh_captcha"><?php echo $this->formElement($form->get('captcha')); ?>
+                <!--<input type="button" id="refreshcaptcha" value="refresh">-->
+              </p>
+            </div>
+            <div style="color:red">
+              <!---->
+            </div> 
+           </div>
+              
           <div class="form-group">
           	 <div class="col-sm-5">
           	 	<?= $this->formSubmit($form->get('send'))?>
@@ -57,5 +73,7 @@ $this->form->setAttribute('role','form');
        </div>
 
     </div>
+  </div>
+
   
 <?php endif?>
