@@ -48,18 +48,18 @@ class Module
           # code...
           if(in_array($action, ['index','autenticar']))
           {
-            $matches->setParam('controller',Controller\LoginController::class);
-            $matches->setParam('action','index');
-            //return;
+            //$matches->setParam('controller',Controller\LoginController::class);
+            //$matches->setParam('action','index');
+            return;
           }
         break;
         case Controller\UsuarioController::class:
           # code...
           if(in_array($action, ['index']))
           {
-            $matches->setParam('controller',Controller\LoginController::class);
-            $matches->setParam('action','index');
-            //return;
+            //$matches->setParam('controller',Controller\LoginController::class);
+            //$matches->setParam('action','index');
+            return;
           }
         break;   
         
@@ -84,7 +84,6 @@ class Module
                  lg::class => function($sm){
                            $dbAdapter = $sm->get(AdapterInterface::class);
                            $authService = $sm->get(AuthenticationService::class);
-                           //$authService = new AuthenticationService();
                            return new Lg($dbAdapter, $authService);
                   },
              	   'UsuariosTableGateway' => function($sm){

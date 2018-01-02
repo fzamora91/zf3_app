@@ -30,20 +30,24 @@ class LoginController extends AbstractActionController
         $this->redirect()->toRoute('login',['action'=>'index']);
    	 }
 
+
    	 $form=new LoginForm("login");
    	 $form->setInputFilter(new LoginValidator());
      
      //obtener los datos del formulario
    	 $data = $this->request->getPost();
    	 $form->setData($data);
-
+     
    	 //validamos el form
    	 if(!$form->isValid())
    	 {
    	 	$modelView = new ViewModel(['titulo'=>'Login', 'form'=>$form]);
    	 	$modelView->setTemplate('usuarios/login/index');
-   	 	return $modelView; 
+      //$this->login->setMessage("El nombre de usuario y la contraseña no coinciden");
+      return $modelView; 
    	 }
+
+
    	 $values=$form->getData();
    	 try
    	 {
@@ -51,7 +55,7 @@ class LoginController extends AbstractActionController
    	 	 //$this->login->setMessage("La contraseña ingresada es la incorrecta");
    	 	 $this->login->login($values['email'],$values['password']);
        $this->flashMessenger()->addSuccessMessage("Has iniciado sesion con exito");
-      return $this->redirect()->toRoute('login',['action'=>'success']);
+       return $this->redirect()->toRoute('login',['action'=>'success']);
    	 }
    	 catch(RuntimeException $e)
    	 {

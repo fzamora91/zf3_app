@@ -75,7 +75,7 @@ class Login
       }
       if(!isset($this->messages[$messageKey]))
       {
-         throw new \RuntimeException('No messages exist for key');
+         throw new RuntimeException('No messages exist for key');
       }
 
    	  $this->messages[$messageKey]=$messageString;
