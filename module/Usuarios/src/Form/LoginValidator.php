@@ -22,9 +22,11 @@ class LoginValidator extends InputFilter
                            'min'=>3,
                            'max'=>8,
                        ],
-                       ],[
+                       ],
+                       /*[
                        'name'=>'Alnum'
-                    ]],
+                       ]*/
+                     ],
 	    ]);
 	}
 }
